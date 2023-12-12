@@ -19,10 +19,18 @@ I enjoy bringing creativity and aesthetics to the digital world."
   },
 ]
 
+const initialValues = () => ({
+  fname: '', 
+  lname: '',
+  bio: '',
+})
+
 export default function App() {
   const [members, setMembers] = useState(teamMembers)
   const [editing, setEditing] = useState(null)
   // ✨ Create a third state to track the values of the inputs
+  const [values, setValues] = useState(initialValues())
+
 
   useEffect(() => {
     // ✨ If the `editing` state changes from null to the number 2 (for example)
@@ -36,6 +44,8 @@ export default function App() {
     // ✨ This is the change handler for your text inputs and your textarea.
     // You can check `evt.target.id` to know which input changed
     // and then you can use `evt.target.value` to update the state of the form
+    const { id, value } = evt.target
+    setValues(prevValues => ({...prevValues, [id]: value }))
   }
   const edit = id => {
     // ✨ Put this function inside a click handler for the <button>Edit</button>.
@@ -80,17 +90,17 @@ export default function App() {
         <form>
           <div>
             <label htmlFor="fname">First Name </label>
-            <input id="fname" type="text" placeholder="Type First Name" />
+            <input onChange={onChange} value={values.fname} id="fname" type="text" placeholder="Type First Name" />
           </div>
 
           <div>
             <label htmlFor="lname">Last Name </label>
-            <input id="lname" type="text" placeholder="Type Last Name" />
+            <input onChange={onChange} value={values.lname} id="lname" type="text" placeholder="Type Last Name" />
           </div>
 
           <div>
             <label htmlFor="bio">Bio </label>
-            <textarea id="bio" placeholder="Type Bio" />
+            <textarea onChange={onChange} value={values.bio} id="bio" placeholder="Type Bio" />
           </div>
 
           <div>
