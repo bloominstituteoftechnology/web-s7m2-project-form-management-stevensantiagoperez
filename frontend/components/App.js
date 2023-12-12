@@ -55,6 +55,9 @@ export default function App() {
   const submitNewMember = () => {
     // This takes the values of the form and constructs a new member object,
     // which is then concatenated at the end of the `members` state
+    const { fname, lname, bio } = values;
+    const newMember = { fname, lname, bio, id: getId() }
+    setMembers([...members, newMember])
   }
   const editExistingMember = () => {
     // ✨ This takes the values of the form and replaces the data of the
@@ -66,6 +69,8 @@ export default function App() {
     // depending on whether the `editing` state is null or has an id in it.
     // Don't allow the page to reload! Prevent the default behavior
     // and clean up the form after submitting
+    evt.preventDefault()
+    submitNewMember()
   }
   return (
     <div>{/* ✨ Fix the JSX by wiring the necessary values and event handlers */}
@@ -87,7 +92,7 @@ export default function App() {
       </div>
       <div id="membersForm">
         <h2>{editing ? 'Edit' : 'Add'} a Team Member</h2>
-        <form>
+        <form onSubmit={onSubmit} >
           <div>
             <label htmlFor="fname">First Name </label>
             <input onChange={onChange} value={values.fname} id="fname" type="text" placeholder="Type First Name" />
